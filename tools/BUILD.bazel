@@ -20,6 +20,14 @@ ispc_toolchain(
     ispc_cmd = "$(location @qt_windows_x86_64//:ispc)",
 )
 
+ispc_toolchain(
+    name = "ispc_osx",
+    data = [
+        "@ispc_mac_x86_64//:ispc",
+    ],
+    ispc_cmd = "$(location @ispc_mac_x86_64//:ispc)",
+)
+
 toolchain(
     name = "ispc_linux_toolchain",
     exec_compatible_with = [
@@ -43,5 +51,18 @@ toolchain(
         "@platforms//cpu:x86_64",
     ],
     toolchain = ":ispc_windows",
+    toolchain_type = "@rules_ispc//tools:toolchain_type",
+)
+
+toolchain(
+    name = "ispc_osx_toolchain",
+    exec_compatible_with = [
+        "@platforms//os:osx",
+    ],
+    target_compatible_with = [
+        "@platforms//os:osx",
+        "@platforms//cpu:x86_64",
+    ],
+    toolchain = ":ispc_osx",
     toolchain_type = "@rules_ispc//tools:toolchain_type",
 )
