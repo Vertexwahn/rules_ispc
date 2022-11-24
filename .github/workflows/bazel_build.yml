@@ -129,7 +129,7 @@ jobs:
         bazelisk run --config=macos //example:main
 
   build_and_test_macos12:
-    name: macOS 12 Bazel build <Apple Clang13>
+    name: macOS 12 Bazel build <Apple Clang14>
     runs-on: macOS-12
 
     steps:
