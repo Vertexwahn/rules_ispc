@@ -22,6 +22,10 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=gcc9 //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=gcc9 //example:main
 
   build_and_test_ubuntu22:
@@ -41,6 +45,10 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=gcc11 //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=gcc11 //example:main
 
   build_and_test_windows10:
@@ -60,6 +68,10 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=vs2019 //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=vs2019 //example:main
 
   build_and_test_windows11:
@@ -79,6 +91,10 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=vs2022 //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=vs2022 //example:main
 
   build_and_test_macos11:
@@ -106,6 +122,10 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=macos //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=macos //example:main
 
   build_and_test_macos12:
@@ -133,4 +153,8 @@ jobs:
       run: |
         cd tests
         bazelisk build --config=macos //...
+
+    - name: Run
+      run: |
+        cd tests
         bazelisk run --config=macos //example:main
