@@ -1,0 +1,15 @@
+load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
+
+ispc_cc_library(
+    name = "square",
+    srcs = [
+        "math.isph",
+        "square.ispc",
+    ],
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [":square"],
+)
