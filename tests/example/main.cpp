@@ -1,4 +1,4 @@
-#include "square.h"
+#include "example/square.h"
 
 #include <stdio.h>
 

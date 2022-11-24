@@ -6,9 +6,9 @@ def ispc_cc_library(name, srcs,  target_compatible_with = [], **kwargs):
             srcs = [ispc_source_file],
             outs = [name + ".o", generted_header_filename],
             cmd = select({
-                "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) --target=avx2 --arch=x86-64 $(locations %s) --header-outfile=%s -o %s.o" % (ispc_source_file, generted_header_filename, name),
-                "@platforms//os:osx": "$(location @ispc_osx_x86_64//:ispc) --target=avx2 --arch=x86-64 $(locations %s) --header-outfile=%s -o %s.o" % (ispc_source_file, generted_header_filename, name),
-                "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) --target=avx2 --target-os=windows --arch=x86-64 $(locations %s) --header-outfile=%s -o %s.o" % (ispc_source_file, generted_header_filename, name),
+                "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) --target=avx2 --arch=x86-64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_source_file, generted_header_filename, name),
+                "@platforms//os:osx": "$(location @ispc_osx_x86_64//:ispc) --target=avx2 --arch=x86-64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_source_file, generted_header_filename, name),
+                "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) --target=avx2 --target-os=windows --arch=x86-64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_source_file, generted_header_filename, name),
             }),
             tools = select({
                 "@platforms//os:linux": ["@ispc_linux_x86_64//:ispc"],

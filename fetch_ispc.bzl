@@ -32,6 +32,6 @@ def fetch_ispc():
             "https://github.com/ispc/ispc/releases/download/v1.18.0/ispc-v1.18.0-macOS.tar.gz",
         ],
         sha256 = "d1435b541182406ff6b18446d31ecceef0eae3aed7654391ae676d3142e0000d",
-        #strip_prefix = "ispc-trunk-windows",
-        build_file = "@rules_ispc//:ispc_mac_x86_64.BUILD",
+        strip_prefix = "ispc-v1.18.0-macOS",
+        build_file = "@rules_ispc//:ispc_osx_x86_64.BUILD",
     )
