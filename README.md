@@ -28,8 +28,8 @@ The following tools should be installed:
 git clone https://github.com/Vertexwahn/rules_ispc.git
 cd rules_ispc
 cd tests
-bazel build //example:main
-bazel run //example:main
+bazel build //square:main
+bazel run //square:main
 ```
 
 ## License
