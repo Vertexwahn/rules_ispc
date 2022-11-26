@@ -6,6 +6,8 @@ ispc_cc_library(
         "math.isph",
         "square.ispc",
     ],
+    out = "square.h",
+    ispc_main_source_file = "square.ispc",
 )
 
 cc_binary(

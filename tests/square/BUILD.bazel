@@ -3,6 +3,8 @@ load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
 ispc_cc_library(
     name = "square",
     srcs = ["square.ispc"],
+    out = "square.h",
+    ispc_main_source_file = "square.ispc",
 )
 
 cc_binary(
