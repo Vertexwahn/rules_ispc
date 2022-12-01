@@ -21,7 +21,7 @@ def fetch_ispc():
         urls = [
             "https://ci.appveyor.com/api/projects/ispc/ispc/artifacts/build%2Fispc-trunk-windows.zip?job=Environment%3A%20APPVEYOR_BUILD_WORKER_IMAGE%3DVisual%20Studio%202019%2C%20LLVM_VERSION%3Dlatest",
         ],
-        sha256 = "99b28eac89fb21980f56d76f74e46b78c89c7523b052d86fd2384fb293272a08",
+        sha256 = "5cba78af81a754edb42a1a1b3e8e4b6eb6f69c588690444e5afa0bcaa78939d0",
         strip_prefix = "ispc-trunk-windows",
         build_file = "@rules_ispc//:ispc_windows_x86_64.BUILD",
     )
