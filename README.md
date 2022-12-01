@@ -2,7 +2,8 @@
 
 # Bazel rules for Intel Implicit SPMD Program Compiler (ISPC)
 
-Experimental Bazel build rules for [ISPC](https://ispc.github.io/).
+Bazel build rules for [ISPC](https://ispc.github.io/).
+Works on Windows, Linux and macOS (currently only on aarch64 (e.g. M1)).
 
 ## Goal 
 

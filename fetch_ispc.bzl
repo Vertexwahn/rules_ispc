@@ -19,7 +19,9 @@ def fetch_ispc():
     http_archive(
         name = "ispc_windows_x86_64",
         urls = [
-            "https://ci.appveyor.com/api/projects/ispc/ispc/artifacts/build%2Fispc-trunk-windows.zip?job=Environment%3A%20APPVEYOR_BUILD_WORKER_IMAGE%3DVisual%20Studio%202019%2C%20LLVM_VERSION%3Dlatest",
+            # Hash code seem to change often - did not find out how to get a specific version/how to pin it
+            #"https://ci.appveyor.com/api/projects/ispc/ispc/artifacts/build%2Fispc-trunk-windows.zip?job=Environment%3A%20APPVEYOR_BUILD_WORKER_IMAGE%3DVisual%20Studio%202019%2C%20LLVM_VERSION%3Dlatest",
+            "https://mirror.vertexwahn.de/ci.appveyor.com/api/projects/ispc/ispc/artifacts/build/ispc-trunk-windows.zip",
         ],
         sha256 = "5cba78af81a754edb42a1a1b3e8e4b6eb6f69c588690444e5afa0bcaa78939d0",
         strip_prefix = "ispc-trunk-windows",
