@@ -148,6 +148,12 @@ jobs:
         uname
         echo "Compiler info:"
         clang --version
+
+    - name: Ispc
+      run: |
+        brew install ispc
+        ispc --version
+        ispc --support-matrix
     
     - name: Build
       run: |

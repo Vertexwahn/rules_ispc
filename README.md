@@ -35,4 +35,3 @@ bazel run //square:main
 ## License
 
 This work is published under Apache 2.0 License.
-
