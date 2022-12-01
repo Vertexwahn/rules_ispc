@@ -154,7 +154,6 @@ jobs:
         brew install ispc
         ispc --version
         ispc --support-matrix
-        ispc --target=sse2 --target-os=macos --arch=x86-64 tests/square/square.ispc --header-outfile=tests/square/square.h -o tests/square/square.o
     
     - name: Build
       run: |
