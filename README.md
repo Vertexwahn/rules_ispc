@@ -5,7 +5,7 @@
 Bazel build rules for [ISPC](https://ispc.github.io/).
 Tested on Windows, Linux and macOS.
 
-## Goal 
+## Goal
 
 The goal of these rules is to be able to use  [ISPC](https://ispc.github.io/) using [Bazel](https://bazel.build/) on Windows, 
 Linux and macOS without the need to preinstall ISPC. 
@@ -19,6 +19,7 @@ The current used version of Bazel is defined in [.bazelversion](tests/.bazelvers
 **Prerequisites:**
 
 The following tools should be installed:
+
 - [Git](https://git-scm.com/)
 - [Bazel](https://bazel.build/install)
 - A C++ compiler (GCC, Visual Studio, Clang, etc.)
