@@ -1,10 +1,8 @@
-def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines, target_compatible_with = [], **kwargs):
+def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], target_compatible_with = [], **kwargs):
     generted_header_filename = out
 
     ispc_defines_list = ""
-    if len(defines) <= 1:
-        ispc_defines_list = " -D".join(defines)
-    else:
+    if len(defines) > 0:
         ispc_defines_list = "-D" + " -D".join(defines)
 
     native.genrule(

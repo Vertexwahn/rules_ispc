@@ -1,0 +1,17 @@
+load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
+
+ispc_cc_library(
+    name = "square",
+    srcs = ["square.ispc"],
+    out = "square.h",
+    defines = [
+        "SQUARE_DEFINED",
+    ],
+    ispc_main_source_file = "square.ispc",
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [":square"],
+)
