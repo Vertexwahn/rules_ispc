@@ -6,6 +6,8 @@ def fetch_ispc():
     """function which fetch remote prebuild ISPC
     """
 
+    # For download link see https://ispc.github.io/downloads.html
+    
     http_archive(
         name = "ispc_linux_x86_64",
         urls = [
