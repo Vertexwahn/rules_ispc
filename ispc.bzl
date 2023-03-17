@@ -7,7 +7,7 @@ def ispc_cc_library(name, out, ispc_main_source_file, srcs, target_compatible_wi
         outs = [name + ".o", generted_header_filename],
         cmd = select({
             "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) --target=avx2 --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_main_source_file, generted_header_filename, name),
-            "@rules_ispc//:osx_arm64": "$(location @ispc_osx_x86_64//:ispc) --target=neon --target-os=macos --arch=aarch64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_main_source_file, generted_header_filename, name),
+            "@rules_ispc//:osx_arm64": "$(location @ispc_osx_arm64//:ispc) --target=neon --target-os=macos --arch=aarch64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_main_source_file, generted_header_filename, name),
             "@rules_ispc//:osx_x86_64": "$(location @ispc_osx_x86_64//:ispc) --target=sse2 --target-os=macos --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_main_source_file, generted_header_filename, name),
             "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) --target=avx2 --target-os=windows --arch=x86-64 --addressing=64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_main_source_file, generted_header_filename, name),
         }),

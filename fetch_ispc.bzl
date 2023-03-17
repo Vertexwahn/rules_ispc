@@ -31,9 +31,19 @@ def fetch_ispc():
     http_archive(
         name = "ispc_osx_x86_64",
         urls = [
-            "https://github.com/ispc/ispc/releases/download/v1.18.0/ispc-v1.18.0-macOS.tar.gz",
+            "https://github.com/ispc/ispc/releases/download/v1.19.0/ispc-v1.19.0-macOS.tar.gz",
         ],
-        sha256 = "d1435b541182406ff6b18446d31ecceef0eae3aed7654391ae676d3142e0000d",
-        strip_prefix = "ispc-v1.18.0-macOS",
+        sha256 = "f61993807ba00d5deeb46f65be7e38d7c95bcfb6e6e114993afa53b44320556c",
+        strip_prefix = "ispc-v1.19.0-macOS",
         build_file = "@rules_ispc//:ispc_osx_x86_64.BUILD",
+    )
+
+    http_archive(
+        name = "ispc_osx_arm64",
+        urls = [
+            "https://github.com/ispc/ispc/releases/download/v1.19.0/ispc-v1.19.0-macOS.arm.tar.gz",
+        ],
+        sha256 = "47b9fba87affde0842752dc6485bd544c13030872cac1190fb4354fe30580b8c",
+        strip_prefix = "ispc-v1.19.0-macOS",
+        build_file = "@rules_ispc//:ispc_osx_arm64.BUILD",
     )
