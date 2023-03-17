@@ -25,5 +25,5 @@ def register_ispc_toolchains():
         "@rules_ispc//tools:ispc_linux_toolchain",
         "@rules_ispc//tools:ispc_windows_toolchain",
         "@rules_ispc//tools:ispc_osx_toolchain",
-        #"@rules_ispc//tools:ispc_osx_M1_toolchain",
+        "@rules_ispc//tools:ispc_osx_arm64_toolchain",
     )
