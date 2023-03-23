@@ -5,20 +5,20 @@ def _ispc_cc_library_impl(ctx):
     info = ctx.toolchains["@rules_ispc//tools:toolchain_type"].ispc_info
     default_target_os = info.default_target_os
 
-    generted_header_filename = ctx.attr.out
+    generated_header_filename = ctx.attr.generated_header_filename
 
     ispc_defines_list = ""
     if len(ctx.attr.defines) > 0:
-        ispc_defines_list = "-D" + " -D".join(ctx.defines)
+        ispc_defines_list = "-D" + " -D".join(ctx.attr.defines)
 
     srcs = ctx.files.srcs
     inputs = depset(srcs)  # see https://bazel.build/extending/rules
 
-    output_file1 = ctx.actions.declare_file(generted_header_filename)
+    output_file1 = ctx.actions.declare_file(generated_header_filename)
     output_file2 = ctx.actions.declare_file(ctx.attr.name + ".o")
 
     args = ctx.actions.args()
-    args.add("-o", generted_header_filename)
+    args.add("-o", generated_header_filename)
     args.add(ispc_defines_list)
     args.add("--target=neon")
     args.add("--target-os=%s" % default_target_os)
@@ -26,9 +26,9 @@ def _ispc_cc_library_impl(ctx):
     args.add("--addressing=64")
     args.add("--pic")
     args.add("square.ispc")#ctx.attr.ispc_main_source_file)
-    args.add("--header-outfile=%s" % generted_header_filename)
+    args.add("--header-outfile=%s" % generated_header_filename)
     args.add("-o")
-    args.add("square.o") #ctx.attr.name + ".o")
+    args.add(ctx.attr.name + ".o")
 
     ctx.actions.run(
         inputs = inputs,
@@ -38,8 +38,9 @@ def _ispc_cc_library_impl(ctx):
     )
 
     return [
+        #DefaultInfo()
         #DefaultInfo(files = depset([output_file1, output_file2])),
-        OutputGroupInfo(cpp = depset([output_file1, output_file2]))
+        OutputGroupInfo(out = depset([output_file1, output_file2]))
     ]
 
 ispc_library2 = rule(
@@ -48,7 +49,7 @@ ispc_library2 = rule(
 
 This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
     attrs = {
-        "out": attr.string(
+        "generated_header_filename": attr.string(
             doc = """
             Name of the generated header file.
             """,
@@ -71,15 +72,18 @@ This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
             List of defines handed over to the ISPC compiler.
             """,
         ),
-        "cpp": attr.output(),
+        #"out": attr.output_list(),
     },
+    #outputs = {
+    #    "out": "{generated_header_filename}.o"
+    #},
     toolchains = ["@rules_ispc//tools:toolchain_type"],
 )
 
-def ispc_cc_library2(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
+def ispc_cc_library2(name, generated_header_filename, ispc_main_source_file, srcs, defines = [], **kwargs):
     ispc_library2(
         name = "%s_ispc_gen" % name,
-        out = out,
+        generated_header_filename = generated_header_filename,
         ispc_main_source_file = ispc_main_source_file,
         srcs = srcs,
         defines = defines,
@@ -95,7 +99,7 @@ def ispc_cc_library2(name, out, ispc_main_source_file, srcs, defines = [], **kwa
     )
 
 def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
-    generted_header_filename = out
+    generated_header_filename = out
 
     ispc_defines_list = ""
     if len(defines) > 0:
@@ -104,12 +108,12 @@ def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwar
     native.genrule(
         name = "%s_ispc_gen" % name,
         srcs = srcs,
-        outs = [name + ".o", generted_header_filename],
+        outs = [name + ".o", generated_header_filename],
         cmd = select({
-            "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) %s --target=avx2 --target-os=linux --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generted_header_filename, name),
-            "@rules_ispc//:osx_arm64": "$(location @ispc_osx_arm64//:ispc) %s --target=neon --target-os=macos --arch=aarch64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generted_header_filename, name),
-            "@rules_ispc//:osx_x86_64": "$(location @ispc_osx_x86_64//:ispc) %s --target=sse2 --target-os=macos --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generted_header_filename, name),
-            "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) %s --target=avx2 --target-os=windows --arch=x86-64 --addressing=64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generted_header_filename, name),
+            "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) %s --target=avx2 --target-os=linux --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
+            "@rules_ispc//:osx_arm64": "$(location @ispc_osx_arm64//:ispc) %s --target=neon --target-os=macos --arch=aarch64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
+            "@rules_ispc//:osx_x86_64": "$(location @ispc_osx_x86_64//:ispc) %s --target=sse2 --target-os=macos --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
+            "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) %s --target=avx2 --target-os=windows --arch=x86-64 --addressing=64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
         }),
         tools = select({
             "@platforms//os:linux": ["@ispc_linux_x86_64//:ispc"],
