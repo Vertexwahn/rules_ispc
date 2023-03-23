@@ -1,0 +1,24 @@
+load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
+
+COMMON_DEFINES = select({
+    "@platforms//os:osx": [
+        "MACOS"
+    ],
+    "//conditions:default": [
+        "NOT_MACOS",
+    ],
+})
+
+ispc_cc_library(
+    name = "square",
+    srcs = ["square.ispc"],
+    out = "square.h",
+    #defines = COMMON_DEFINES,  # this is currenlty not working
+    ispc_main_source_file = "square.ispc",
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [":square"],
+)
