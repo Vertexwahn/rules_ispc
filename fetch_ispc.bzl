@@ -1,9 +1,9 @@
-"""ispc library fetch"""
+"""ISPC compiler fetch"""
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 def fetch_ispc():
-    """function which fetch remote prebuild ISPC
+    """function which fetches the remote prebuild ISPC compiler
     """
 
     # For download link see https://ispc.github.io/downloads.html
