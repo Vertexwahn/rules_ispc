@@ -1,4 +1,100 @@
-def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], target_compatible_with = [], **kwargs):
+"""A rule that compiles ISPC programs and make them available as a C++ library.
+"""
+
+def _ispc_cc_library_impl(ctx):
+    info = ctx.toolchains["@rules_ispc//tools:toolchain_type"].ispc_info
+    default_target_os = info.default_target_os
+
+    generted_header_filename = ctx.attr.out
+
+    ispc_defines_list = ""
+    if len(ctx.attr.defines) > 0:
+        ispc_defines_list = "-D" + " -D".join(ctx.defines)
+
+    srcs = ctx.files.srcs
+    inputs = depset(srcs)  # see https://bazel.build/extending/rules
+
+    output_file1 = ctx.actions.declare_file(generted_header_filename)
+    output_file2 = ctx.actions.declare_file(ctx.attr.name + ".o")
+
+    args = ctx.actions.args()
+    args.add("-o", generted_header_filename)
+    args.add(ispc_defines_list)
+    args.add("--target=neon")
+    args.add("--target-os=%s" % default_target_os)
+    args.add("--arch=aarch64")
+    args.add("--addressing=64")
+    args.add("--pic")
+    args.add("square.ispc")#ctx.attr.ispc_main_source_file)
+    args.add("--header-outfile=%s" % generted_header_filename)
+    args.add("-o")
+    args.add("square.o") #ctx.attr.name + ".o")
+
+    ctx.actions.run(
+        inputs = inputs,
+        outputs = [output_file1, output_file2],
+        arguments = [args],
+        executable = info.ispc_path,
+    )
+
+    return [
+        #DefaultInfo(files = depset([output_file1, output_file2])),
+        OutputGroupInfo(cpp = depset([output_file1, output_file2]))
+    ]
+
+ispc_library2 = rule(
+    implementation = _ispc_cc_library_impl,
+    doc = """Compiles a ISPC program and makes it available as a C++ library
+
+This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
+    attrs = {
+        "out": attr.string(
+            doc = """
+            Name of the generated header file.
+            """,
+        ),
+        "ispc_main_source_file": attr.label(
+            allow_single_file = [".ispc"],
+            doc = """
+            File to compile.
+            """,
+        ),
+        "srcs": attr.label_list(
+            allow_files = [".ispc", ".isph"],
+            doc = """
+            The list of ISPC source files that are compiled to create the library.
+            Only `.ispc` and `.isph` files are permitted.
+            """,
+        ),
+        "defines": attr.string_list(
+            doc = """
+            List of defines handed over to the ISPC compiler.
+            """,
+        ),
+        "cpp": attr.output(),
+    },
+    toolchains = ["@rules_ispc//tools:toolchain_type"],
+)
+
+def ispc_cc_library2(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
+    ispc_library2(
+        name = "%s_ispc_gen" % name,
+        out = out,
+        ispc_main_source_file = ispc_main_source_file,
+        srcs = srcs,
+        defines = defines,
+        **kwargs
+    )
+    native.cc_library(
+        name = name,
+        srcs = [name + ".o"],
+        hdrs = [name + ".h"],
+        defines = defines,
+        #deps = ["%s_ispc_gen" % name],
+        **kwargs
+    )
+
+def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
     generted_header_filename = out
 
     ispc_defines_list = ""
@@ -21,13 +117,11 @@ def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], target
             "@rules_ispc//:osx_x86_64": ["@ispc_osx_x86_64//:ispc"],
             "@platforms//os:windows": ["@ispc_windows_x86_64//:ispc"],
         }),
-        target_compatible_with = target_compatible_with,
     )
     native.cc_library(
         name = name,
         srcs = [name + ".o"],
         hdrs = [name + ".h"],
         defines = defines,
-        target_compatible_with = target_compatible_with,
         **kwargs
     )

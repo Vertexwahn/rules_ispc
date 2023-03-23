@@ -5,7 +5,7 @@ IspcToolchainInfo = provider(
     doc = "Information about how to invoke ISPC compiler.",
     fields = [
         "ispc_path",
-        "target_os",
+        "default_target_os",
     ],
 )
 
@@ -14,7 +14,7 @@ def _ispc_toolchain_impl(ctx):
     toolchain_info = platform_common.ToolchainInfo(
         ispc_info = IspcToolchainInfo(
             ispc_path = expand_ispc_path,
-            target_os = ctx.attr.target_os,
+            default_target_os = ctx.attr.default_target_os,
         ),
     )
     return [toolchain_info]
@@ -23,7 +23,7 @@ ispc_toolchain = rule(
     implementation = _ispc_toolchain_impl,
     attrs = {
         "ispc_cmd": attr.string(),
-        "target_os": attr.string(),
+        "default_target_os": attr.string(),
         "data": attr.label_list(allow_files = True),
     },
 )

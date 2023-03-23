@@ -10,7 +10,7 @@ ispc_toolchain(
         "@ispc_linux_x86_64//:ispc",
     ],
     ispc_cmd = "$(location @ispc_linux_x86_64//:ispc)",
-    target_os = "linux",
+    default_target_os = "linux",
 )
 
 ispc_toolchain(
@@ -19,7 +19,7 @@ ispc_toolchain(
         "@ispc_windows_x86_64//:ispc",
     ],
     ispc_cmd = "$(location @ispc_windows_x86_64//:ispc)",
-    target_os = "windows",
+    default_target_os = "windows",
 )
 
 ispc_toolchain(
@@ -28,7 +28,7 @@ ispc_toolchain(
         "@ispc_osx_arm64//:ispc",
     ],
     ispc_cmd = "$(location @ispc_osx_arm64//:ispc)",
-    target_os = "macos",
+    default_target_os = "macos",
 )
 
 ispc_toolchain(
@@ -37,7 +37,7 @@ ispc_toolchain(
         "@ispc_osx_x86_64//:ispc",
     ],
     ispc_cmd = "$(location @ispc_osx_x86_64//:ispc)",
-    target_os = "macos",
+    default_target_os = "macos",
 )
 
 toolchain(
