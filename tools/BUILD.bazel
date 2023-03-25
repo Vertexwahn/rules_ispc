@@ -23,11 +23,11 @@ ispc_toolchain(
 )
 
 ispc_toolchain(
-    name = "ispc_osx_arm64",
+    name = "ispc_osx_M1",
     data = [
         "@ispc_osx_arm64//:ispc",
     ],
-    ispc_cmd = "$(location @ispc_osx_arm64//:ispc)",
+    ispc_cmd = "/opt/homebrew/bin/ispc",#  "$(location @ispc_osx_arm64//:ispc)",
     default_target_os = "macos",
 )
 
@@ -75,7 +75,7 @@ toolchain(
         "@platforms//os:osx",
         "@platforms//cpu:arm64",
     ],
-    toolchain = ":ispc_osx_arm64",
+    toolchain = ":ispc_osx_M1",
     toolchain_type = "@rules_ispc//tools:toolchain_type",
 )
 

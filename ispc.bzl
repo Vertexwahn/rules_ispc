@@ -14,33 +14,39 @@ def _ispc_cc_library_impl(ctx):
     srcs = ctx.files.srcs
     inputs = depset(srcs)  # see https://bazel.build/extending/rules
 
-    output_file1 = ctx.actions.declare_file(generated_header_filename)
-    output_file2 = ctx.actions.declare_file(ctx.attr.name + ".o")
+    object = ctx.actions.declare_file(ctx.attr.name + ".o")
 
-    args = ctx.actions.args()
-    args.add("-o", generated_header_filename)
-    args.add(ispc_defines_list)
+    args = ctx.actions.args() 
+   
+    if len(ctx.attr.defines) > 0:
+        args.add(ispc_defines_list)
+
     args.add("--target=neon")
     args.add("--target-os=%s" % default_target_os)
     args.add("--arch=aarch64")
     args.add("--addressing=64")
     args.add("--pic")
-    args.add("square.ispc")#ctx.attr.ispc_main_source_file)
-    args.add("--header-outfile=%s" % generated_header_filename)
-    args.add("-o")
-    args.add(ctx.attr.name + ".o")
+
+    #args.add(ctx.attr.ispc_main_source_file.package )
+    args.add(ctx.attr.ispc_main_source_file.package + ctx.attr.ispc_main_source_file)
+
+    args.add("--header-outfile=%s" % "square.h") # generated_header_filename)
+    args.add("-o", object)
+
+    exec_requirements = {}
+    for elem in ctx.attr.tags:
+        exec_requirements[elem] = "1"
 
     ctx.actions.run(
         inputs = inputs,
-        outputs = [output_file1, output_file2],
+        outputs = [object, ctx.outputs.generated_header_filename],
         arguments = [args],
         executable = info.ispc_path,
+        execution_requirements = exec_requirements,
     )
 
     return [
-        #DefaultInfo()
-        #DefaultInfo(files = depset([output_file1, output_file2])),
-        OutputGroupInfo(out = depset([output_file1, output_file2]))
+        DefaultInfo(files = depset(direct=[object])),
     ]
 
 ispc_library2 = rule(
@@ -49,7 +55,7 @@ ispc_library2 = rule(
 
 This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
     attrs = {
-        "generated_header_filename": attr.string(
+        "generated_header_filename": attr.output(
             doc = """
             Name of the generated header file.
             """,
@@ -72,11 +78,7 @@ This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
             List of defines handed over to the ISPC compiler.
             """,
         ),
-        #"out": attr.output_list(),
     },
-    #outputs = {
-    #    "out": "{generated_header_filename}.o"
-    #},
     toolchains = ["@rules_ispc//tools:toolchain_type"],
 )
 
@@ -91,10 +93,9 @@ def ispc_cc_library2(name, generated_header_filename, ispc_main_source_file, src
     )
     native.cc_library(
         name = name,
-        srcs = [name + ".o"],
+        srcs = [":%s_ispc_gen" % name],
         hdrs = [name + ".h"],
         defines = defines,
-        #deps = ["%s_ispc_gen" % name],
         **kwargs
     )
 
