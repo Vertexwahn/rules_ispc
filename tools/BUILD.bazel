@@ -27,7 +27,7 @@ ispc_toolchain(
     data = [
         "@ispc_osx_arm64//:ispc",
     ],
-    ispc_cmd = "/opt/homebrew/bin/ispc",#  "$(location @ispc_osx_arm64//:ispc)",
+    ispc_cmd = "$(location @ispc_osx_arm64//:ispc)",#"/opt/homebrew/bin/ispc",#  
     default_target_os = "macos",
 )
 

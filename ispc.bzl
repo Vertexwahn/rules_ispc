@@ -27,8 +27,8 @@ def _ispc_cc_library_impl(ctx):
     args.add("--addressing=64")
     args.add("--pic")
 
-    #args.add(ctx.attr.ispc_main_source_file.package )
-    args.add(ctx.attr.ispc_main_source_file.package + ctx.attr.ispc_main_source_file)
+    args.add(ctx.attr.ispc_main_source_file)
+    #args.add(ctx.attr.ispc_main_source_file.package + ctx.attr.ispc_main_source_file)
 
     args.add("--header-outfile=%s" % "square.h") # generated_header_filename)
     args.add("-o", object)

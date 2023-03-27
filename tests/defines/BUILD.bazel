@@ -1,4 +1,4 @@
-load("@rules_ispc//:ispc.bzl", "ispc_cc_library2")
+load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
 
 COMMON_DEFINES = select({
     "@platforms//os:osx": [
@@ -9,10 +9,11 @@ COMMON_DEFINES = select({
     ],
 })
 
-ispc_cc_library2(
+ispc_cc_library(
     name = "square",
     srcs = ["square.ispc"],
-    generated_header_filename = "square.h",
+    #generated_header_filename = "square.h",
+    out = "square.h",
     #defines = COMMON_DEFINES,  # this is currenlty not working
     ispc_main_source_file = "square.ispc",
 )
