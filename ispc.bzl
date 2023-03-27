@@ -4,6 +4,7 @@
 def _ispc_cc_library_impl(ctx):
     info = ctx.toolchains["@rules_ispc//tools:toolchain_type"].ispc_info
     default_target_os = info.default_target_os
+    ispc_path = info.ispc_path
 
     generated_header_filename = ctx.attr.generated_header_filename
 
@@ -16,21 +17,31 @@ def _ispc_cc_library_impl(ctx):
 
     object = ctx.actions.declare_file(ctx.attr.name + ".o")
 
+    o2 = ctx.actions.declare_file("square.h")
+
     args = ctx.actions.args() 
    
     if len(ctx.attr.defines) > 0:
         args.add(ispc_defines_list)
 
-    args.add("--target=neon")
     args.add("--target-os=%s" % default_target_os)
-    args.add("--arch=aarch64")
-    args.add("--addressing=64")
-    args.add("--pic")
 
-    args.add(ctx.attr.ispc_main_source_file)
+    if default_target_os == "windows":
+        args.add("--arch=x86-64")
+        args.add("--target=avx2")
+    else:
+        args.add("--arch=aarch64")
+        args.add("--target=neon")
+
+    args.add("--addressing=64")
+
+    if default_target_os != "windows":
+          args.add("--pic")
+
+    args.add(ctx.file.ispc_main_source_file.short_path)
     #args.add(ctx.attr.ispc_main_source_file.package + ctx.attr.ispc_main_source_file)
 
-    args.add("--header-outfile=%s" % "square.h") # generated_header_filename)
+    args.add("--header-outfile=%s" % "defines/square.h") #generated_header_filename.short_path)
     args.add("-o", object)
 
     exec_requirements = {}
@@ -41,7 +52,7 @@ def _ispc_cc_library_impl(ctx):
         inputs = inputs,
         outputs = [object, ctx.outputs.generated_header_filename],
         arguments = [args],
-        executable = info.ispc_path,
+        executable = ispc_path,
         execution_requirements = exec_requirements,
     )
 
