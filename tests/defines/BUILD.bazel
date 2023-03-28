@@ -12,9 +12,8 @@ COMMON_DEFINES = select({
 ispc_cc_library(
     name = "square",
     srcs = ["square.ispc"],
-    #generated_header_filename = "square.h",
     out = "square.h",
-    #defines = COMMON_DEFINES,  # this is currenlty not working
+    defines = COMMON_DEFINES,
     ispc_main_source_file = "square.ispc",
 )
 

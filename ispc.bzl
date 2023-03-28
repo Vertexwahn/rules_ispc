@@ -3,45 +3,35 @@
 
 def _ispc_cc_library_impl(ctx):
     info = ctx.toolchains["@rules_ispc//tools:toolchain_type"].ispc_info
+    default_target = info.default_target
     default_target_os = info.default_target_os
+    default_arch = info.default_arch
     ispc_path = info.ispc_path
-
-    generated_header_filename = ctx.attr.generated_header_filename
 
     ispc_defines_list = ""
     if len(ctx.attr.defines) > 0:
         ispc_defines_list = "-D" + " -D".join(ctx.attr.defines)
 
     srcs = ctx.files.srcs
-    inputs = depset(srcs)  # see https://bazel.build/extending/rules
+    inputs = depset(srcs)
 
     object = ctx.actions.declare_file(ctx.attr.name + ".o")
-
-    o2 = ctx.actions.declare_file("square.h")
-
+    
     args = ctx.actions.args() 
    
     if len(ctx.attr.defines) > 0:
         args.add(ispc_defines_list)
 
+    args.add("--target=%s" % default_target)
     args.add("--target-os=%s" % default_target_os)
-
-    if default_target_os == "windows":
-        args.add("--arch=x86-64")
-        args.add("--target=avx2")
-    else:
-        args.add("--arch=aarch64")
-        args.add("--target=neon")
-
+    args.add("--arch=%s" % default_arch)
     args.add("--addressing=64")
 
     if default_target_os != "windows":
-          args.add("--pic")
-
+        args.add("--pic")
+            
     args.add(ctx.file.ispc_main_source_file.short_path)
-    #args.add(ctx.attr.ispc_main_source_file.package + ctx.attr.ispc_main_source_file)
-
-    args.add("--header-outfile=%s" % "defines/square.h") #generated_header_filename.short_path)
+    args.add("--header-outfile=%s" % ctx.outputs.out.path)
     args.add("-o", object)
 
     exec_requirements = {}
@@ -50,7 +40,7 @@ def _ispc_cc_library_impl(ctx):
 
     ctx.actions.run(
         inputs = inputs,
-        outputs = [object, ctx.outputs.generated_header_filename],
+        outputs = [object, ctx.outputs.out],
         arguments = [args],
         executable = ispc_path,
         execution_requirements = exec_requirements,
@@ -66,7 +56,7 @@ ispc_library2 = rule(
 
 This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
     attrs = {
-        "generated_header_filename": attr.output(
+        "out": attr.output(
             doc = """
             Name of the generated header file.
             """,
@@ -93,50 +83,19 @@ This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
     toolchains = ["@rules_ispc//tools:toolchain_type"],
 )
 
-def ispc_cc_library2(name, generated_header_filename, ispc_main_source_file, srcs, defines = [], **kwargs):
+def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
     ispc_library2(
         name = "%s_ispc_gen" % name,
-        generated_header_filename = generated_header_filename,
+        out = out,
         ispc_main_source_file = ispc_main_source_file,
         srcs = srcs,
         defines = defines,
+        tags = ["local"],
         **kwargs
     )
     native.cc_library(
         name = name,
         srcs = [":%s_ispc_gen" % name],
-        hdrs = [name + ".h"],
-        defines = defines,
-        **kwargs
-    )
-
-def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
-    generated_header_filename = out
-
-    ispc_defines_list = ""
-    if len(defines) > 0:
-        ispc_defines_list = "-D" + " -D".join(defines)
-
-    native.genrule(
-        name = "%s_ispc_gen" % name,
-        srcs = srcs,
-        outs = [name + ".o", generated_header_filename],
-        cmd = select({
-            "@platforms//os:linux": "$(location @ispc_linux_x86_64//:ispc) %s --target=avx2 --target-os=linux --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
-            "@rules_ispc//:osx_arm64": "$(location @ispc_osx_arm64//:ispc) %s --target=neon --target-os=macos --arch=aarch64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
-            "@rules_ispc//:osx_x86_64": "$(location @ispc_osx_x86_64//:ispc) %s --target=sse2 --target-os=macos --arch=x86-64 --addressing=64 --pic $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
-            "@platforms//os:windows": "$(location @ispc_windows_x86_64//:ispc) %s --target=avx2 --target-os=windows --arch=x86-64 --addressing=64 $(locations %s) --header-outfile=$(location %s) -o $(location %s.o)" % (ispc_defines_list, ispc_main_source_file, generated_header_filename, name),
-        }),
-        tools = select({
-            "@platforms//os:linux": ["@ispc_linux_x86_64//:ispc"],
-            "@rules_ispc//:osx_arm64": ["@ispc_osx_arm64//:ispc"],
-            "@rules_ispc//:osx_x86_64": ["@ispc_osx_x86_64//:ispc"],
-            "@platforms//os:windows": ["@ispc_windows_x86_64//:ispc"],
-        }),
-    )
-    native.cc_library(
-        name = name,
-        srcs = [name + ".o"],
         hdrs = [name + ".h"],
         defines = defines,
         **kwargs

@@ -14,7 +14,9 @@ All the magic to set up ISPC should be done by Bazel with as little effort as po
 ## Quick start
 
 This project uses [Bazel](https://bazel.build/) as a build system. 
-The current used version of Bazel is defined in [.bazelversion](tests/.bazelversion).
+The current used version of Bazel to test these rules is defined in [.bazelversion](tests/.bazelversion).
+It is very likely that these rules work also with other Bazel versions,
+since only very basic features are used.
 
 **Prerequisites:**
 
@@ -22,7 +24,7 @@ The following tools should be installed:
 
 - [Git](https://git-scm.com/)
 - [Bazel](https://bazel.build/install)
-- A C++ compiler (GCC, Visual Studio, Clang, etc.)
+- A C++ compiler (GCC, Visual Studio, Clang, Apple Clang, etc.)
 
 **Checkout, build, and run:**
 
