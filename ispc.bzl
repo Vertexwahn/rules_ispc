@@ -29,8 +29,8 @@ def _ispc_cc_library_impl(ctx):
 
     if default_target_os != "windows":
         args.add("--pic")
-            
-    args.add(ctx.file.ispc_main_source_file.short_path)
+    
+    args.add(ctx.file.ispc_main_source_file)
     args.add("--header-outfile=%s" % ctx.outputs.out.path)
     args.add("-o", object)
 
@@ -50,7 +50,7 @@ def _ispc_cc_library_impl(ctx):
         DefaultInfo(files = depset(direct=[object])),
     ]
 
-ispc_library2 = rule(
+ispc_library = rule(
     implementation = _ispc_cc_library_impl,
     doc = """Compiles a ISPC program and makes it available as a C++ library
 
@@ -84,7 +84,7 @@ This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
 )
 
 def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwargs):
-    ispc_library2(
+    ispc_library(
         name = "%s_ispc_gen" % name,
         out = out,
         ispc_main_source_file = ispc_main_source_file,
