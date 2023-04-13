@@ -2,7 +2,7 @@ load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
 
 COMMON_DEFINES = select({
     "@platforms//os:osx": [
-        "MACOS"
+        "MACOS",
     ],
     "//conditions:default": [
         "NOT_MACOS",

@@ -18,7 +18,7 @@ def _ispc_toolchain_impl(ctx):
             ispc_path = expand_ispc_path,
             default_target = ctx.attr.default_target,
             default_target_os = ctx.attr.default_target_os,
-            default_arch = ctx.attr.default_arch
+            default_arch = ctx.attr.default_arch,
         ),
     )
     return [toolchain_info]

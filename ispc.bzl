@@ -16,9 +16,9 @@ def _ispc_cc_library_impl(ctx):
     inputs = depset(srcs)
 
     object = ctx.actions.declare_file(ctx.attr.name + ".o")
-    
-    args = ctx.actions.args() 
-   
+
+    args = ctx.actions.args()
+
     if len(ctx.attr.defines) > 0:
         args.add(ispc_defines_list)
 
@@ -29,7 +29,7 @@ def _ispc_cc_library_impl(ctx):
 
     if default_target_os != "windows":
         args.add("--pic")
-    
+
     args.add(ctx.file.ispc_main_source_file)
     args.add("--header-outfile=%s" % ctx.outputs.out.path)
     args.add("-o", object)
@@ -47,7 +47,7 @@ def _ispc_cc_library_impl(ctx):
     )
 
     return [
-        DefaultInfo(files = depset(direct=[object])),
+        DefaultInfo(files = depset(direct = [object])),
     ]
 
 ispc_library = rule(

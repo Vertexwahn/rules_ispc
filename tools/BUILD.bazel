@@ -9,10 +9,10 @@ ispc_toolchain(
     data = [
         "@ispc_linux_x86_64//:ispc",
     ],
-    ispc_cmd = "$(location @ispc_linux_x86_64//:ispc)",
+    default_arch = "x86-64",
     default_target = "avx2",
     default_target_os = "linux",
-    default_arch = "x86-64",
+    ispc_cmd = "$(location @ispc_linux_x86_64//:ispc)",
 )
 
 ispc_toolchain(
@@ -20,10 +20,10 @@ ispc_toolchain(
     data = [
         "@ispc_windows_x86_64//:ispc",
     ],
-    ispc_cmd = "$(location @ispc_windows_x86_64//:ispc)",
+    default_arch = "x86-64",
     default_target = "avx2",
     default_target_os = "windows",
-    default_arch = "x86-64",
+    ispc_cmd = "$(location @ispc_windows_x86_64//:ispc)",
 )
 
 ispc_toolchain(
@@ -31,10 +31,10 @@ ispc_toolchain(
     data = [
         "@ispc_osx_arm64//:ispc",
     ],
-    ispc_cmd = "$(location @ispc_osx_arm64//:ispc)",#"/opt/homebrew/bin/ispc",#  
+    default_arch = "aarch64",
     default_target = "neon",
     default_target_os = "macos",
-    default_arch = "aarch64",
+    ispc_cmd = "$(location @ispc_osx_arm64//:ispc)",  #"/opt/homebrew/bin/ispc",#
 )
 
 ispc_toolchain(
@@ -42,10 +42,10 @@ ispc_toolchain(
     data = [
         "@ispc_osx_x86_64//:ispc",
     ],
-    ispc_cmd = "$(location @ispc_osx_x86_64//:ispc)",
+    default_arch = "x86-64",
     default_target = "sse2",
     default_target_os = "macos",
-    default_arch = "x86-64",
+    ispc_cmd = "$(location @ispc_osx_x86_64//:ispc)",
 )
 
 toolchain(

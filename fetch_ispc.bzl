@@ -7,7 +7,7 @@ def fetch_ispc():
     """
 
     # For download link see https://ispc.github.io/downloads.html
-    
+
     http_archive(
         name = "ispc_linux_x86_64",
         urls = [
@@ -21,7 +21,7 @@ def fetch_ispc():
     http_archive(
         name = "ispc_windows_x86_64",
         urls = [
-            "https://github.com/ispc/ispc/releases/download/v1.19.0/ispc-v1.19.0-windows.zip"
+            "https://github.com/ispc/ispc/releases/download/v1.19.0/ispc-v1.19.0-windows.zip",
         ],
         sha256 = "3f2953f9328290adfd0143707dce13e342f6df1099b3be5148a25e41347f958c",
         strip_prefix = "ispc-v1.19.0-windows",
