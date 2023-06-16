@@ -34,7 +34,7 @@ def fetch_ispc():
             "https://github.com/ispc/ispc/releases/download/v1.20.0/ispc-v1.20.0-macOS.x86_64.tar.gz",
         ],
         #sha256 = "ff203980215c1385849d1580cbf82aa5edbf17b23d0667d593301d1c9f7f0e1e",
-        strip_prefix = "ispc-v1.20.0-macOS",
+        strip_prefix = "ispc-v1.20.0-macOS.x86_64",
         build_file = "@rules_ispc//:ispc_osx_x86_64.BUILD",
     )
 
