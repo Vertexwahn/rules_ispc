@@ -13,7 +13,7 @@ def fetch_ispc():
         urls = [
             "https://github.com/ispc/ispc/releases/download/v1.20.0/ispc-v1.20.0-linux.tar.gz",
         ],
-        #sha256 = "f99a0afd4c8b5e8aceb46af8e90a7ba0813bf4c4111044ced27d498591304f9c",
+        sha256 = "e6412b88aa312fcd10c46f92df0149ccc4d99e53552c4ce127aa6c634fe9b308",
         strip_prefix = "ispc-v1.20.0-linux",
         build_file = "@rules_ispc//:ispc_linux_x86_64.BUILD",
     )
