@@ -23,7 +23,7 @@ def fetch_ispc():
         urls = [
             "https://github.com/ispc/ispc/releases/download/v1.20.0/ispc-v1.20.0-windows.zip",
         ],
-        #sha256 = "3f2953f9328290adfd0143707dce13e342f6df1099b3be5148a25e41347f958c",
+        sha256 = "e212ebfb4e8afb57adc103a2579c52673a3ca49610fbc2a5eae643d3d378548d",
         strip_prefix = "ispc-v1.20.0-windows",
         build_file = "@rules_ispc//:ispc_windows_x86_64.BUILD",
     )
