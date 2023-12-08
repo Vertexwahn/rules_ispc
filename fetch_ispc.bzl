@@ -13,7 +13,7 @@ def fetch_ispc():
         urls = [
             "https://github.com/ispc/ispc/releases/download/v1.22.0/ispc-v1.22.0-linux.tar.gz",
         ],
-        sha256 = "e6412b88aa312fcd10c46f92df0149ccc4d99e53552c4ce127aa6c634fe9b308",
+        sha256 = "8c935ef7537c241a519f2632e6ffeae0988a64f21db78d403ceaa4c52517b416",
         strip_prefix = "ispc-v1.22.0-linux",
         build_file = "@rules_ispc//:ispc_linux_x86_64.BUILD",
     )
@@ -23,7 +23,7 @@ def fetch_ispc():
         urls = [
             "https://github.com/ispc/ispc/releases/download/v1.22.0/ispc-v1.22.0-windows.zip",
         ],
-        sha256 = "e212ebfb4e8afb57adc103a2579c52673a3ca49610fbc2a5eae643d3d378548d",
+        sha256 = "e597a1568675d5c5ad9cf2fe5be2653d279c74b46d0e899a01a844770a0a9ad1",
         strip_prefix = "ispc-v1.22.0-windows",
         build_file = "@rules_ispc//:ispc_windows_x86_64.BUILD",
     )
@@ -33,7 +33,7 @@ def fetch_ispc():
         urls = [
             "https://github.com/ispc/ispc/releases/download/v1.22.0/ispc-v1.22.0-macOS.x86_64.tar.gz",
         ],
-        sha256 = "e25222d2d6f4f8e3561556ac73f88721ceb5486439d6c2a566d37407ad9a5907",
+        sha256 = "e700725416e41c021fb3f603363aeb52f9f3fbb3d91d3ddaf9b6efe3d249ce90",
         strip_prefix = "ispc-v1.22.0-macOS.x86_64",
         build_file = "@rules_ispc//:ispc_osx_x86_64.BUILD",
     )
