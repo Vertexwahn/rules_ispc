@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -56,7 +56,7 @@ jobs:
     runs-on: windows-2019
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -79,7 +79,7 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -102,7 +102,7 @@ jobs:
     runs-on: macOS-11
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -133,7 +133,7 @@ jobs:
     runs-on: macOS-12
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Mount bazel cache
       uses: actions/cache@v4
@@ -164,7 +164,7 @@ jobs:
     runs-on: macOS-13
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Mount bazel cache
         uses: actions/cache@v4
