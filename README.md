@@ -16,7 +16,7 @@ All the magic to set up ISPC should be done by Bazel with as little effort as po
 This project uses [Bazel](https://bazel.build/) as a build system. 
 The current used version of Bazel to test these rules is defined in [.bazelversion](tests/.bazelversion).
 It is very likely that these rules work also with other Bazel versions,
-since only very basic features are used.
+since only very basic features are used (at least support for Bzlmod is required).
 
 **Prerequisites:**
 

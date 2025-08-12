@@ -1,0 +1,26 @@
+bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_cc", version = "0.1.4")
+
+bazel_dep(name = "rules_ispc")
+
+local_path_override(
+    module_name = "rules_ispc",
+    path = "..",
+)
+
+ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
+ispc.download()
+
+use_repo(
+    ispc,
+    "ispc_linux_x86_64",
+    "ispc_windows_x86_64",
+    "ispc_osx_x86_64",
+    "ispc_osx_arm64"
+)
+
+register_toolchains(
+    "@rules_ispc//tools:all",
+    dev_dependency = True,
+)
+
