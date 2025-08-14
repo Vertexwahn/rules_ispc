@@ -1,6 +1,6 @@
 module(
     name = "rules_ispc",
-    version = "1.27.0",
+    version = "0.0.5",
     compatibility_level = 1,
 )
 
