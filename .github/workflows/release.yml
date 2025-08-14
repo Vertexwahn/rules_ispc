@@ -19,21 +19,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-      - name: Mount bazel caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/bazel
-            ~/.cache/bazel-repo
-          key: bazel-cache-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', 'MODULE.bazel') }}
-          restore-keys: bazel-cache-
-      - name: bazel build //...
-        env:
-          # Bazelisk will download bazel to here
-          XDG_CACHE_HOME: ~/.cache/bazel-repo
+
+      - name: Build examples
         run: cd tests && bazel build //...
+
       - name: Prepare release notes and artifacts
         run: .github/workflows/release_prep.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
