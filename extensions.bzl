@@ -14,7 +14,7 @@ def _ispc_impl(ctx):
 _download = tag_class(
     attrs = {
         "version": attr.string(
-            doc = "ISPC version to download (e.g., '1.22.0' or '1.23.0'). Defaults to '1.22.0' for backward compatibility.",
+            doc = "ISPC version to download (e.g., '1.22.0', '1.23.0', or '1.28.2'). Defaults to '1.22.0' for backward compatibility.",
             default = "1.22.0",
         ),
     }
