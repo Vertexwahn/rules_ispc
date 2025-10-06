@@ -8,6 +8,8 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_cc", version = "0.1.4")
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
+# Download ISPC with version selection (defaults to 1.22.0 if not specified)
+# To use a different version, specify it like: ispc.download(version = "1.23.0")
 ispc.download()
 
 use_repo(

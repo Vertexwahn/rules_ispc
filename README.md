@@ -11,6 +11,36 @@ The goal of these rules is to be able to use  [ISPC](https://ispc.github.io/) us
 Linux and macOS without the need to preinstall ISPC. 
 All the magic to set up ISPC should be done by Bazel with as little effort as possible.
 
+## ISPC Version Selection
+
+This project supports multiple ISPC versions. You can select the version you need in your `MODULE.bazel` file:
+
+**Supported versions:**
+- `1.22.0` (default)
+- `1.23.0`
+
+**Usage in MODULE.bazel:**
+
+```starlark
+ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
+
+# Option 1: Use default version (1.22.0)
+ispc.download()
+
+# Option 2: Specify a version explicitly
+ispc.download(version = "1.23.0")
+
+use_repo(
+    ispc,
+    "ispc_linux_x86_64",
+    "ispc_windows_x86_64",
+    "ispc_osx_x86_64",
+    "ispc_osx_arm64"
+)
+```
+
+If no version is specified, version `1.22.0` will be used by default for backward compatibility.
+
 ## Quick start
 
 This project uses [Bazel](https://bazel.build/) as a build system. 

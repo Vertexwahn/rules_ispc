@@ -9,6 +9,8 @@ local_path_override(
 )
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
+# Select ISPC version: Options are "1.22.0" (default) or "1.23.0"
+# Example: ispc.download(version = "1.23.0")
 ispc.download()
 
 use_repo(
