@@ -48,6 +48,50 @@ _ISPC_VERSIONS = {
             "strip_prefix": "ispc-v1.23.0-macOS.arm64",
         },
     },
+    "1.28.0": {
+        "linux": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.0/ispc-v1.28.0-linux.tar.gz",
+            "sha256": "993ecc5b3d9b72a2dfa6ec96362a80a92ed4e1c4858d41dcab74cc9d64f9d3aa",
+            "strip_prefix": "ispc-v1.28.0-linux",
+        },
+        "windows": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.0/ispc-v1.28.0-windows.zip",
+            "sha256": "727369f4477ea312bc9ab1b92911d7247a03ffaf83f39030d8d3e5fab08712ca",
+            "strip_prefix": "ispc-v1.28.0-windows",
+        },
+        "osx_x86_64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.0/ispc-v1.28.0-macOS.x86_64.tar.gz",
+            "sha256": "8ac7285bc6a7d7162289cbe175e6fd01a466be5f5136a2e66c05afa9a07bb657",
+            "strip_prefix": "ispc-v1.28.0-macOS.x86_64",
+        },
+        "osx_arm64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.0/ispc-v1.28.0-macOS.arm64.tar.gz",
+            "sha256": "741664b2edae3fcf94b38985e5cf5f18ad19a393f7e745577bdfe29d50ca6dd6",
+            "strip_prefix": "ispc-v1.28.0-macOS.arm64",
+        },
+    },
+    "1.28.1": {
+        "linux": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.1/ispc-v1.28.1-linux.tar.gz",
+            "sha256": "00697aadb6e41e01568c9ef75446a0d3074ca05292c35c359f98a8fd27758791",
+            "strip_prefix": "ispc-v1.28.1-linux",
+        },
+        "windows": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.1/ispc-v1.28.1-windows.zip",
+            "sha256": "230f0b1beeb333dc1e9fcdbac759869b362aab94db2285486ae6526d9160c52c",
+            "strip_prefix": "ispc-v1.28.1-windows",
+        },
+        "osx_x86_64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.1/ispc-v1.28.1-macOS.x86_64.tar.gz",
+            "sha256": "8c7fe14a3cc3ccc7f2b0717f00107a452cdfc2d68614ee986ed69a6f45e1a1c0",
+            "strip_prefix": "ispc-v1.28.1-macOS.x86_64",
+        },
+        "osx_arm64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.28.1/ispc-v1.28.1-macOS.arm64.tar.gz",
+            "sha256": "6a07c9087ae1d7fd41e785d9eafd6fd8cfa08d1354292df22ee003893ea48f64",
+            "strip_prefix": "ispc-v1.28.1-macOS.arm64",
+        },
+    },
     "1.28.2": {
         "linux": {
             "url": "https://github.com/ispc/ispc/releases/download/v1.28.2/ispc-v1.28.2-linux.tar.gz",
@@ -76,7 +120,7 @@ def fetch_ispc(version = "1.22.0"):
     """Fetches the remote prebuilt ISPC compiler for the specified version.
     
     Args:
-        version: ISPC version to download. Supported versions: 1.22.0, 1.23.0.
+        version: ISPC version to download. Supported versions: 1.22.0, 1.23.0, 1.28.0, 1.28.1, 1.28.2.
                  Defaults to 1.22.0 for backward compatibility.
     """
 

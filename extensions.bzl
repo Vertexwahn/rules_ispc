@@ -1,14 +1,19 @@
 load("//:fetch_ispc.bzl", "fetch_ispc")
 
-def _ispc_impl(ctx):
-    # Get version from the first download tag, default to "1.22.0" for backward compatibility
-    version = "1.22.0"
-    for mod in ctx.modules:
-        for download_tag in mod.tags.download:
-            if download_tag.version:
-                version = download_tag.version
-                break
-
+def _ispc_impl(module_ctx):
+    version = "1.22.0"  # Default version
+    
+    # Extract version from download tags
+    found_proper_version = False
+    for module in module_ctx.modules:
+        for download_tag in module.tags.download:
+            version = download_tag.version
+            print("Fetching ISPC version: {}".format(version))
+            found_proper_version = True
+            break
+        if found_proper_version:
+            break
+  
     fetch_ispc(version = version)
 
 _download = tag_class(
