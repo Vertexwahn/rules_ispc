@@ -9,7 +9,7 @@ local_path_override(
 )
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
-ispc.download(version = "1.28.0")
+ispc.download(version = "1.28.2")
 
 use_repo(
     ispc,
