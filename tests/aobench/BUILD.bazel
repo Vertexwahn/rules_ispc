@@ -26,6 +26,6 @@ cc_binary(
     ],
     deps = [
         ":ao_ispc",
-        "@rules_ispc//examples/common:tasksys",
+        "@rules_ispc//common:tasksys",
     ],
 )
