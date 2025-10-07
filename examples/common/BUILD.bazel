@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "tasksys",
+    srcs = ["tasksys.cpp"],
+    defines = select({
+        "@platforms//os:osx": ["ISPC_USE_GCD"],
+        "@platforms//os:linux": ["ISPC_USE_PTHREADS"],
+        "@platforms//os:windows": ["ISPC_USE_CONCRT"],
+        "//conditions:default": ["ISPC_USE_PTHREADS"],
+    }),
+    linkopts = select({
+        "@platforms//os:linux": ["-lpthread"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+)

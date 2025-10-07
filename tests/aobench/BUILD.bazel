@@ -1,0 +1,31 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
+
+COMMON_DEFINES = select({
+    "@platforms//os:osx": [
+        "MACOS",
+    ],
+    "//conditions:default": [
+        "NOT_MACOS",
+    ],
+})
+
+ispc_cc_library(
+    name = "ao_ispc",
+    srcs = ["ao.ispc"],
+    out = "ao_ispc.h",
+    #defines = COMMON_DEFINES,
+    ispc_main_source_file = "ao.ispc",
+)
+
+cc_binary(
+    name = "main",
+    srcs = [
+        "ao.cpp",
+        "ao_serial.cpp",
+    ],
+    deps = [
+        ":ao_ispc",
+        "@rules_ispc//examples/common:tasksys",
+    ],
+)
