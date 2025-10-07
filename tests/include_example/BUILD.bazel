@@ -1,3 +1,4 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 load("@rules_ispc//:ispc.bzl", "ispc_cc_library")
 
 ispc_cc_library(

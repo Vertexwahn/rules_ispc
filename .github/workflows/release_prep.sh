@@ -23,7 +23,7 @@ Add to your `MODULE.bazel` file:
 bazel_dep(name = "rules_ispc", version = "${TAG}")
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
-ispc.download()
+ispc.download(version = "1.28.2")
 
 use_repo(
     ispc,
