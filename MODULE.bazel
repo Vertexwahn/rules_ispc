@@ -9,13 +9,12 @@ bazel_dep(name = "rules_cc", version = "0.2.9")
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
 ispc.download()
-
 use_repo(
     ispc,
     "ispc_linux_x86_64",
-    "ispc_windows_x86_64",
+    "ispc_osx_arm64",
     "ispc_osx_x86_64",
-    "ispc_osx_arm64"
+    "ispc_windows_x86_64",
 )
 
 register_toolchains(

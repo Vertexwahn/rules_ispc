@@ -1,6 +1,8 @@
 """A rule that compiles ISPC programs and make them available as a C++ library.
 """
 
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+
 def _ispc_cc_library_impl(ctx):
     info = ctx.toolchains["@rules_ispc//tools:toolchain_type"].ispc_info
     default_target = info.default_target
@@ -93,7 +95,7 @@ def ispc_cc_library(name, out, ispc_main_source_file, srcs, defines = [], **kwar
         tags = ["local"],
         **kwargs
     )
-    native.cc_library(
+    cc_library(
         name = name,
         srcs = [":%s_ispc_gen" % name],
         hdrs = [name + ".h"],

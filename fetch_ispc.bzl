@@ -272,7 +272,7 @@ _ISPC_VERSIONS = {
 
 def fetch_ispc(version = "1.22.0"):
     """Fetches the remote prebuilt ISPC compiler for the specified version.
-    
+
     Args:
         version: ISPC version to download. Supported versions: 1.22.0, 1.23.0, 1.24.0, 1.25.0, 1.25.1, 1.25.2, 1.25.3, 1.26.0, 1.27.0, 1.28.0, 1.28.1, 1.28.2.
                  Defaults to 1.22.0 for backward compatibility.
@@ -283,7 +283,7 @@ def fetch_ispc(version = "1.22.0"):
     if version not in _ISPC_VERSIONS:
         fail("Unsupported ISPC version: {}. Supported versions: {}".format(
             version,
-            ", ".join(_ISPC_VERSIONS.keys())
+            ", ".join(_ISPC_VERSIONS.keys()),
         ))
 
     version_data = _ISPC_VERSIONS[version]
@@ -311,7 +311,7 @@ def fetch_ispc(version = "1.22.0"):
         strip_prefix = version_data["osx_x86_64"]["strip_prefix"],
         build_file = "@rules_ispc//:ispc_osx_x86_64.BUILD",
     )
-        
+
     http_archive(
         name = "ispc_osx_arm64",
         urls = [version_data["osx_arm64"]["url"]],
