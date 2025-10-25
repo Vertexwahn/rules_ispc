@@ -5,7 +5,7 @@ module(
 )
 
 bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_cc", version = "0.2.9")
+bazel_dep(name = "rules_cc", version = "0.2.11")
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
 ispc.download()
