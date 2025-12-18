@@ -268,6 +268,28 @@ _ISPC_VERSIONS = {
             "strip_prefix": "ispc-v1.28.2-macOS.arm64",
         },
     },
+    "1.29.0": {
+        "linux": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.29.0/ispc-v1.29.0-linux.tar.gz",
+            "sha256": "32e611de1252cf1e09a6a13327f5746b8477f99e15ffa4cbd1b422386776688c",  # TOOD: invalid hash - fix it
+            "strip_prefix": "ispc-v1.29.0-linux",
+        },
+        "windows": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.29.0/ispc-1.29.0-windows.zip",
+            "sha256": "25966868d97a6f9bc38501b864883558994189446476584e5e491476d540de17",  # TOOD: invalid hash - fix it
+            "strip_prefix": "ispc-v1.29.0-windows",
+        },
+        "osx_x86_64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.29.0/ispc-1.29.0-macOS.x86_64.tar.gz",
+            "sha256": "c3b613fb0250a4d2f89a08969068a294f5d1271fc8d0bd379529468e45ad49fb",  # TOOD: invalid hash - fix it
+            "strip_prefix": "ispc-v1.29.0-macOS.x86_64",
+        },
+        "osx_arm64": {
+            "url": "https://github.com/ispc/ispc/releases/download/v1.29.0/ispc-1.29.0-macOS.arm64.tar.gz",
+            "sha256": "45b5b16b1c24a65fc704cb8bf3f76f166b1dab733532c9ad60b4a024f9526414",  # TOOD: invalid hash - fix it
+            "strip_prefix": "ispc-v1.29.0-macOS.arm64",
+        },
+    },
 }
 
 def fetch_ispc(version = "1.22.0"):
