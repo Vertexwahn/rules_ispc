@@ -1,5 +1,5 @@
-bazel_dep(name = "platforms", version = "1.0.0")
-bazel_dep(name = "rules_cc", version = "0.2.12")
+bazel_dep(name = "platforms", version = "1.1.0")
+bazel_dep(name = "rules_cc", version = "0.2.28")
 bazel_dep(name = "rules_ispc")
 local_path_override(
     module_name = "rules_ispc",
@@ -7,7 +7,7 @@ local_path_override(
 )
 
 ispc = use_extension("@rules_ispc//:extensions.bzl", "ispc")
-ispc.download(version = "1.28.2")
+ispc.download(version = "1.32.0")
 use_repo(
     ispc,
     "ispc_linux_x86_64",

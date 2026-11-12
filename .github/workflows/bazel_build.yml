@@ -5,9 +5,9 @@ on:
    push: {}
 
 jobs:
-  build_and_test_macos14:
-    name: macOS 14 Bazel build <Apple Clang14>
-    runs-on: macOS-14
+  build_and_test_macos26:
+    name: macOS 26 Bazel build <Apple Clang21>
+    runs-on: macOS-26
 
     steps:
       - uses: actions/checkout@v7
@@ -42,46 +42,9 @@ jobs:
           cd tests
           bazel run --config=macos //square:main
 
-  build_and_test_macos15:
-    name: macOS 15 Bazel build <Apple Clang14>
-    runs-on: macOS-15
-
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Mount bazel cache
-        uses: actions/cache@v6
-        with:
-          path: "/home/runner/.cache/bazel"
-          key: bazel
-
-      - name: Print info
-        run: |
-          echo "OS info:"
-          sw_vers
-          uname
-          echo "Compiler info:"
-          clang --version
-
-      - name: Ispc
-        run: |
-          brew install ispc
-          ispc --version
-          ispc --support-matrix
-
-      - name: Build
-        run: |
-          cd tests
-          bazel build --config=macos //...
-
-      - name: Run
-        run: |
-          cd tests
-          bazel run --config=macos //square:main
-
-  build_and_test_ubuntu22:
-    name: Linux Ubuntu 22.04 build <GCC 11.3.0>
-    runs-on: ubuntu-22.04
+  build_and_test_ubuntu26:
+    name: Linux Ubuntu 26.04 build <GCC 15>
+    runs-on: ubuntu-26.04
 
     steps:
     - uses: actions/checkout@v7
@@ -90,63 +53,17 @@ jobs:
       uses: actions/cache@v6
       with:
         path: "/home/runner/.cache/bazel"
-        key: bazel-ubuntu22
+        key: bazel-ubuntu26
 
     - name: Build
       run: |
         cd tests
-        bazel build --config=gcc11 //...
+        bazel build --config=gcc15 //...
 
     - name: Run
       run: |
         cd tests
-        bazel run --config=gcc11 //square:main
-
-  build_and_test_ubuntu24:
-    name: Linux Ubuntu 24.04 build <GCC 13>
-    runs-on: ubuntu-24.04
-
-    steps:
-    - uses: actions/checkout@v7
-
-    - name: Mount bazel cache
-      uses: actions/cache@v6
-      with:
-        path: "/home/runner/.cache/bazel"
-        key: bazel-ubuntu24
-
-    - name: Build
-      run: |
-        cd tests
-        bazel build --config=gcc11 //...
-
-    - name: Run
-      run: |
-        cd tests
-        bazel run --config=gcc11 //square:main
-
-  build_and_test_windows_server2022:
-    name: Windows Server 2022 build <Visual Studio 2022>
-    runs-on: windows-2022
-
-    steps:
-    - uses: actions/checkout@v7
-
-    - name: Mount bazel cache
-      uses: actions/cache@v6
-      with:
-        path: "/home/runner/.cache/bazel"
-        key: bazel
-
-    - name: Build
-      run: |
-        cd tests
-        bazel build --config=vs2022 //...
-
-    - name: Run
-      run: |
-        cd tests
-        bazel run --config=vs2022 //square:main
+        bazel run --config=gcc15 //square:main
 
   build_and_test_windows_server2025:
     name: Windows Server 2025 build <Visual Studio 2022>
@@ -164,9 +81,9 @@ jobs:
     - name: Build
       run: |
         cd tests
-        bazel build --config=vs2022 //...
+        bazel build --config=vs2026 //...
 
     - name: Run
       run: |
         cd tests
-        bazel run --config=vs2022 //square:main
+        bazel run --config=vs2026 //square:main

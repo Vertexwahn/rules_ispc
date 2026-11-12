@@ -5,6 +5,7 @@ IspcToolchainInfo = provider(
     doc = "Information about how to invoke ISPC.",
     fields = [
         "ispc_path",
+        "ispc_files",
         "default_target",
         "default_target_os",
         "default_arch",
@@ -16,6 +17,7 @@ def _ispc_toolchain_impl(ctx):
     toolchain_info = platform_common.ToolchainInfo(
         ispc_info = IspcToolchainInfo(
             ispc_path = expand_ispc_path,
+            ispc_files = ctx.files.data,
             default_target = ctx.attr.default_target,
             default_target_os = ctx.attr.default_target_os,
             default_arch = ctx.attr.default_arch,

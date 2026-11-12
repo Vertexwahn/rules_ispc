@@ -45,6 +45,8 @@ def _ispc_cc_library_impl(ctx):
         outputs = [object, ctx.outputs.out],
         arguments = [args],
         executable = ispc_path,
+        # executable is a plain path, so declare the ISPC binary to rebuild when the ISPC version changes
+        tools = info.ispc_files,
         execution_requirements = exec_requirements,
     )
 
@@ -56,7 +58,7 @@ ispc_library = rule(
     implementation = _ispc_cc_library_impl,
     doc = """Compiles a ISPC program and makes it available as a C++ library
 
-This rule uses a precompiled version of ISPC v1.19.0 for compilation.""",
+This rule uses a precompiled version of ISPC (v1.32.0 by default) for compilation.""",
     attrs = {
         "out": attr.output(
             doc = """

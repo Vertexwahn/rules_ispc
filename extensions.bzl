@@ -1,7 +1,7 @@
 load("//:fetch_ispc.bzl", "fetch_ispc")
 
 def _ispc_impl(module_ctx):
-    version = "1.22.0"  # Default version
+    version = "1.32.0"  # Default version
 
     # Extract version from download tags
     found_proper_version = False
@@ -19,8 +19,8 @@ def _ispc_impl(module_ctx):
 _download = tag_class(
     attrs = {
         "version": attr.string(
-            doc = "ISPC version to download (e.g., '1.22.0' or '1.23.0'). Defaults to '1.22.0' for backward compatibility.",
-            default = "1.22.0",
+            doc = "ISPC version to download (e.g., '1.28.2' or '1.32.0'). Defaults to '1.32.0'.",
+            default = "1.32.0",
         ),
     },
 )
