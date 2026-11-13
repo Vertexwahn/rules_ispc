@@ -36,6 +36,18 @@ bazel build //square:main
 bazel run //square:main
 ```
 
+## Releasing
+
+Pushing a version tag such as `0.0.8` runs the release workflow, builds the examples,
+creates a GitHub Release, and then opens a draft pull request to the
+[Bazel Central Registry](https://github.com/bazelbuild/bazel-central-registry).
+The BCR presubmit configuration is in `.bcr/presubmit.yml`.
+
+Configure the `BCR_PUBLISH_TOKEN` Actions secret with a classic GitHub personal
+access token that has `repo` and `workflow` permissions. The publish workflow uses
+the `Vertexwahn/bazel-central-registry` fork and can be rerun manually from Actions
+with the release tag if BCR publishing needs to be retried.
+
 ## License
 
 This work is published under [Apache 2.0 License](LICENSE).
